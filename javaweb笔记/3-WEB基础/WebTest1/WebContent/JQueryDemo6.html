@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>计算器</title>
+<style type="text/css">
+	#cal{
+		text-align: center;
+		border: solid 2px #cce;
+		margin:0 auto;
+		width:450px;
+		height: 750px;
+	}
+	#screen{
+		height: 345px;
+		border-bottom: solid 2px #ccc;
+	}
+	#in{
+		height: 400px;
+	}
+	input{
+		text-align:center;
+		font-size:30px;
+		background-color:#ccc;
+		border:none;
+		border-radius:8px;
+		width: 96px;
+		height: 70px;
+		margin: 8px 4px 0px 4px;
+	}
+	#d1,#d2{
+		height: 150px;	
+		margin-bottom: 10px;
+		text-align: right;
+		padding: 20px;
+	}
+	span{
+		text-align: right;
+		font-size: 40px;
+		width: 400px;
+		
+		display:block;
+		<!-- 换行属性 -->
+		white-space:pre-wrap;
+		word-wrap : break-word ;
+	}
+</style>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+	<h1 align="center">计算器</h1>
+	<div id="cal">
+		<!-- 显示输入信息和计算结果 -->
+		<div id="screen">
+			<div id="d1">
+				<span id="s1"></span>
+			</div>
+			<div id="d2">
+				<span id="s2"></span>
+			</div>
+		</div>	
+		<!-- 输入界面 -->
+		<div id="in">
+			<input type="button" value="AC" id="delete">
+			<input type="button" value="←" id="bp">
+			<input type="button" value="÷">
+			<input type="button" value="×">
+			
+			<input type="button" value="7">
+			<input type="button" value="8">
+			<input type="button" value="9">
+			<input type="button" value="-" id="reduce">
+			
+			<input type="button" value="4">
+			<input type="button" value="5">
+			<input type="button" value="6">
+			<input type="button" value="+">
+			
+			<div style="float: right; padding-right: 10px;" >
+				<input type="button" value="=" style="height: 148px;" id="dy">
+			</div>
+			
+			<div style="text-align: left; padding-left: 10px;">
+				<input type="button" value="1">
+				<input type="button" value="2">
+				<input type="button" value="3">
+			</div>
+			
+			
+			<div style="text-align: left; padding-left: 10px;">	
+				<input type="button" value="%">
+				<input type="button" value="0">
+				<input type="button" value=".">
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	//颜色变化
+	$('input').mousedown(function(){
+		$(this).css('background-color' , '#B2DFEE');
+	});
+	$('input').mouseup(function(){
+		$(this).css('background-color' , '#ccc');
+	});
+	//输入的计算公式
+	var str = "";
+	$('input:not("#dy,#delete,#bp")').click(function(){
+		var str1 ;
+		if($(this).val() == '÷'){
+			str1 = "/";
+		}else if($(this).val() == '×'){
+			str1 = "*";
+		}else{
+			str1 = $(this).val().toString();
+		}
+		str = str + str1 ;
+		$('#s1').text(str);
+	});
+	//计算并显示结果
+	$('#dy').click(function(){
+		//异常捕获，输入的计算公式是错误的时，发生异常
+		try{
+			if(/^-?\d+\.\d+$/.test(eval(str))){
+				var answer = eval(str).toFixed(4);
+			}else{
+				var answer = eval(str);
+			}
+		}catch(err){
+			var answer = "error"
+		}
+		$('#s2').text(answer);
+	});
+	//删除上一步
+	$('#bp').click(function(){
+		var s = $('#s1').text();
+		$('#s1').text(s.substring(0,s.length-1));
+		str = $('#s1').text();
+	});
+	//清除显示
+	$('#delete').click(function(){
+		str="";
+		$('span').text('');
+	});
+	//键盘输入
+	//判断shift键是否按下
+	function isShiftKeyPressed(e){
+		if(e.shiftKey==1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	$(document).keydown(function(e){
+		var keychar = String.fromCharCode(e.keyCode);
+		console.log(e.keyCode);
+		//数字键和AC键、删除键、'-'、'/'、'.'、'='
+		if(keychar==1){
+			$('input[value="1"]').trigger('mousedown');
+			$('input[value="1"]').trigger('click');
+		}else if(keychar==2){
+			$('input[value="2"]').trigger('mousedown');
+			$('input[value="2"]').trigger('click');
+		}else if(keychar==3){
+			$('input[value="3"]').trigger('mousedown');
+			$('input[value="3"]').trigger('click');
+		}else if(keychar==4){
+			$('input[value="4"]').trigger('mousedown');
+			$('input[value="4"]').trigger('click');
+		}else if(!e.shiftKey && keychar==5){
+			$('input[value="5"]').trigger('mousedown');
+			$('input[value="5"]').trigger('click');
+		}else if(keychar==6){
+			$('input[value="6"]').trigger('mousedown');
+			$('input[value="6"]').trigger('click');
+		}else if(keychar==7){
+			$('input[value="7"]').trigger('mousedown');
+			$('input[value="7"]').trigger('click');
+		}else if(!e.shiftKey && keychar==8){
+			$('input[value="8"]').trigger('mousedown');
+			$('input[value="8"]').trigger('click');
+		}else if(keychar==9){
+			$('input[value="9"]').trigger('mousedown');
+			$('input[value="9"]').trigger('click');
+		}else if(e.keyCode==48){
+			$('input[value="0"]').trigger('mousedown');
+			$('input[value="0"]').trigger('click');
+		}else if(e.keyCode==189){
+			$('#reduce').trigger('mousedown');
+			$('#reduce').trigger('click');
+		}else if((e.keyCode==187||e.keyCode==13) && !e.shiftKey){
+			$('#dy').trigger('mousedown');
+			$('#dy').trigger('click');
+		}else if(e.keyCode==27){
+			$('input[value="AC"]').trigger('mousedown');
+			$('input[value="AC"]').trigger('click');
+		}else if(e.keyCode==8){
+			$('input[value="←"]').trigger('mousedown');
+			$('input[value="←"]').trigger('click');
+		}else if(e.keyCode==190){
+			$('input[value="."]').trigger('mousedown');
+			$('input[value="."]').trigger('click');
+		}else if(e.keyCode==191){
+			$('input[value="÷"]').trigger('mousedown');
+			$('input[value="÷"]').trigger('click');
+		}
+		//+ * %
+		else if(e.shiftKey && e.keyCode==187){
+			$('input[value="+"]').trigger('mousedown');
+			$('input[value="+"]').trigger('click');
+		}
+		else if(e.shiftKey && e.keyCode==56){
+			$('input[value="×"]').trigger('mousedown');
+			$('input[value="×"]').trigger('click');
+		}
+		else if(e.shiftKey && e.keyCode==53){
+			$('input[value="%"]').trigger('mousedown');
+			$('input[value="%"]').trigger('click');
+		}
+	});
+	$(document).keyup(function(e){
+		$('input').trigger('mouseup');
+	});
+</script>
+</html>

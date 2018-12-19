@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>员工表</title>
+<style type="text/css">
+	table {
+		border: solid 2px #ccc;
+		width: 600px;
+		border-spacing: 0px;
+	}
+	th{
+		border: solid 2px #ccc;
+		width: 150px;
+		height: 30px;
+	}
+	td{
+		border: solid 2px #ccc;
+		width: 150px;
+		height: 30px;
+		text-align: center;
+	}
+</style>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+	<h1>员工表</h1>
+	<table>
+		<!-- 表头 -->
+		<thead>
+			<tr>
+				<th>姓名</th>
+				<th>年龄</th>
+				<th>性别</th>
+				<th>编号</th>
+			</tr>
+		</thead>
+		<!-- 表主体 -->
+		<tbody>
+			
+		</tbody>
+	</table>
+</body>
+<script type="text/javascript">
+	//点击标题查询员工（将员工信息生成tr插入table中然后显示出来）
+	$('h1').click(function(){
+		//假设一个数组是从数据库中取出的数据（每一个数组都是一个Json对象）
+		var emps = [
+			{'name':'张三' , 'age':'22' , 'sex':'男' , 'id':'001'},
+			{'name':'李四' , 'age':'23' , 'sex':'男' , 'id':'002'},
+			{'name':'王二麻子' , 'age':'25' , 'sex':'女' , 'id':'003'},
+			{'name':'王二麻' , 'age':'25' , 'sex':'女' , 'id':'004'},
+			{'name':'王二' , 'age':'25' , 'sex':'女' , 'id':'005'},
+			{'name':'zd' , 'age':'25' , 'sex':'女' , 'id':'006'},
+			{'name':'wa' , 'age':'25' , 'sex':'女' , 'id':'007'},
+			{'name':'王麻子' , 'age':'25' , 'sex':'女' , 'id':'008'}
+		];
+		//创建tr并插入table
+		$(emps).each(function(){
+			var $tr = $('<tr><td>'+ this.name +'</td><td>'+ this.age +'</td><td>'+ this.sex +'</td><td>'+ this.id +'</td></tr>');
+			$('tbody').append($tr);
+			if(this.name == "zd")
+				return false;
+// 			console.log(this.name+" , "+this.age+ " , "+this.sex+ " , "+this.id);
+		});
+	});
+</script>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>demo1</title>
+</head>
+<body>
+	<br>
+	<p>顶部</p>
+	<p><a href="#bottom">直达底部</a></p>
+	<div style="border: 5px solid blue ;">
+		<p>上，这是上</p>
+		<p>上，这是上</p>
+		<p>上，这是上</p>
+		<p>上，这是上</p>
+	</div>
+	<!-- div边框 5px 实线 红色 -->
+	<div style="border: 5px solid red ;">	
+		中，这是中
+	</div>
+	<div style="border: 5px solid green ;">
+		<p>下，这是下</p>
+		<p>下，这是下</p>
+		<p>下，这是下</p>
+	</div>
+	<!--行内元素之 —— span行内元素分区 -->
+	<p>青岛<span style="color:red;">胶州</span></p>
+	<!--行内元素之 —— 斜体元素和粗体元素 -->
+	<p><strong>中国</strong><em>山东省</em><b>青岛市</b><i>胶州市</i>铺集镇</p>
+	<!--行内元素之 —— 下划线和删除线元素  -->
+	<p><del>中国山东省</del>青岛市<u>胶州市铺集镇</u></p>
+	<!-- 空格折叠规则：默认情况下，HTML中的多个空格符、多个制表符、多个换行符会压缩成单个空格 -->
+	<p>中国山东省青岛市胶州市铺集镇</p>
+	<!--行内元素之 —— <br>换行符和实体引用 -->
+	<p>中国&nbsp&nbsp山东省&nbsp&nbsp青岛市<br>胶州市&nbsp&nbsp&nbsp&nbsp&nbsp铺集镇</p>
+	
+	
+	<!-- 图像 -->
+	<img src="images/per.jpg" width="500" height="500"><br>
+	<!-- 超链接 -->
+	<p><a href="http://www.baidu.com" target="_blank">点击此处打开新页面——百度</a></p>
+	<p><a href="http://www.baidu.com" target="_self">点击此处跳转新页面——百度</a></p>
+	<!-- 表格(写一个两行两列的表格) -->
+	<table border="1px" cellpadding="10" cellspacing="10" align="center" width="300" height="200" >
+		<!--第一行  -->
+		<tr align="center">
+			<!-- 第一列 -->
+			<td>第一行第一列</td>
+			<!-- 第二列 -->
+			<td>第一行第二列</td>
+		</tr>
+		<!--第二行  -->
+		<tr>
+			<!--第一列  -->
+			<td align="right">第二行第一列</td>
+			<!--第二列  -->
+			<td valign="top">第二行第二例</td>
+		</tr>
+	</table>
+	<!-- 表格的跨行属性和跨列属性演示 -->
+	<!-- 跨行属性 -->
+	<table border="1px" cellpadding="10" cellspacing="10" align="center" width="400" height="200" >
+		<!--第一行  -->
+		<tr align="center">
+			<!-- 第一列跨行，即同时占据第一列的前两行 -->
+			<td rowspan="2">第一行第一列并且跨行</td>
+			<!-- 第二列 -->
+			<td>第一行第二列</td>
+		</tr>
+		<!--第二行  -->
+		<tr>
+			<!--第一列 注意的是因为第一列第一行跨行了，所以第一列第二行要删除，供跨行的占用  -->
+			<!--第二列  -->
+			<td valign="top">第二行第二例</td>
+		</tr>
+	</table>
+	<!-- 跨列属性 -->
+	<table border="1px" cellpadding="10" cellspacing="10" align="center" width="500" height="200" >
+		<!--第一行  -->
+		<tr align="center">
+			<!-- 第一列  因为跨列，即同时占据第一行的前两列-->
+			<td colspan="2">第一行第一列并且跨列</td>
+			<!-- 第二列    因为被跨列了，所以第一行第二列需要删除，供跨列使用-->
+		</tr>
+		<!--第二行  -->
+		<tr>
+			<!--第一列  -->
+			<td align="right">第二行第一列</td>
+			<!--第二列-->
+			<td valign="top">第二行第二例</td>
+		</tr>
+	</table>
+	<!-- 行分组 -->
+	<table border="1px" cellpadding="10" cellspacing="10" align="center" width="600" height="300" bordercolor="red">
+		<!-- 标题行，th是标题行的单元格，会自动居中并加粗 -->
+		<thead style="color: blue;">
+		<tr>
+			<th>商品名城</th>
+			<th>单价</th>
+			<th>数量</th>
+			<th>金额</th>
+		</tr>
+		</thead>
+		<!-- 数据行 -->
+		<tbody style="color:red;">
+		<tr>
+			<td>鼠标</td>
+			<td>50</td>
+			<td>2</td>
+			<td>100</td>
+		</tr>
+		<tr>
+			<td>键盘</td>
+			<td>100</td>
+			<td>1</td>
+			<td>100</td>
+		</tr>
+		<tr>
+			<td>耳机</td>
+			<td>200</td>
+			<td>1</td>
+			<td>200</td>
+		</tr>
+		</tbody>
+		<!-- 合计行 -->
+		<tfoot style="color: green;">
+		<tr>
+			<td colspan="3"  align="right">合计</td>
+			<td>400</td>
+		</tr>
+		</tfoot>
+	</table>
+	<!-- 表单： form是表单，内部可以包含多个控件，控件内可以输入值。我们是以表单为单元进行提交的，一次要	提交一个表单所包含的所有控件的值。 -->
+	<form>
+		<!-- 账号 -->
+		<p	align="center">	
+			<!-- label是表单中的文本，通过for属性可以绑定到input元素上，使得点击label时，相当于点击了对应的input。 -->
+			<label for="user_name">账号：</label>
+			<input type="text" id="user_name" value="123456">
+		</p>
+		<!-- 密码 -->
+		<p align="center">
+			<label for="psw">密码：</label>
+			<input type="password" id="psw">
+		</p>
+		<!-- 单选框 -->
+		<!-- 一组单选框，它们之间是彼此互斥的，同名的radio即可，即name相同 -->
+		<p align="center">
+			性别：
+			<input type="radio" id="male" name="sex" checked>
+			<label for="male">男</label>
+			<input type="radio" id="female" name="sex">
+			<label for="female">女</label>
+		</p>
+		<!-- 多选框 -->
+		<p align="center">
+			兴趣：
+			<input type="checkbox" id="basketball" name="like" checked>
+			<label for="basketball">蓝球</label>
+			<input type="checkbox" id="football" name="like">
+			<label for="football">足球</label>
+			<input type="checkbox" id="pingpang" name="like">
+			<label for="pingpang">乒乓球</label>
+		</p>
+		<!-- 隐藏域：隐藏的文本框，用来封装一些不希望用户看见的数据。该控件不需要输入，而是预置 -->
+		<p>
+			<input type="hidden" value="123">
+		</p>
+		<!-- 文件选择框 -->
+		<p align="center">
+			<label for="attachment">上传附件：</label>
+			<input type="file" id="attachment">
+		</p>
+		<!-- 按钮 提交、重置、普通 按钮 -->
+		<p align="center">
+			<input type="submit" value="提交">
+			<input type="reset" value="重置">
+			<input type="button" value="取消">
+		</p>
+		<!-- 文本域 -->
+		<p align="center">
+			<label for="self">自我介绍：</label>
+			<textarea id="self" rows="5" cols="40">这就是文本域的默认值</textarea>
+		</p>
+		<!-- 下拉框 -->
+		<p align="center">
+			<label for="address">住址：</label>
+			<select id="address">
+				<option value="1">-请选择-</option>
+				<option value="2">山东</option>
+				<option value="3">江西</option>
+				<option value="4">四川</option>
+			</select>
+		</p>
+	</form>
+	<!-- 锚点 -->
+	<br><br><br>
+	<p><a href="#">回到顶部</a></p>
+	<p><a name="bottom">底部</a></p>
+</body>
+</html>

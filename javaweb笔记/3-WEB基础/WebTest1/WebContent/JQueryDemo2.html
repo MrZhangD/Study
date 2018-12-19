@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JQuery对象</title>
+<style type="text/css">
+	img{
+		width: 300px;
+		height: 400px;
+	}
+	table{
+		width: 500px;
+		height: 200px;
+		border: solid 2px #ccc;
+		border-spacing: 0px;
+	}
+	td{
+		border: solid 2px #ccc;
+		text-align: center;
+		width: 166px;
+	}
+</style>
+<script src="js/jquery.min.js"></script>
+</head>
+<body>
+	<h1>JQuery对象</h1>
+		<p>1、JQuery统一封装的对象</p>
+		<p>2、JQuery选择器选择的结果是JQuery对象</p>
+		<p>3、JQuery对象本质上是一个DOM对象数组</p>
+		<input type="button" value="按一下子" onclick="but();">
+		
+	<h1>点击标题图片消失/出现</h1>
+		<img alt="星空1" src="images/1.jpg">
+		<img alt="星空2" src="images/2.jpg">
+		<img alt="星空3" src="images/3.jpg">
+	<h2 id="pp">选择器组选择</h2>	
+		<p id = "p1">张迪哦可接受的返回的是gas管理会计华工科技爱国会尽快更好的健康更好的公交卡给大家看</p>
+		<p class = "p2">张抵达公交卡干坏事了的两个哈市乖乖虎处时华中科技控制结构后一二维故事福建省覅偶hi噢hihi个hi贵UGGi</p>
+	<h2 id="cc">层次选择器</h2>
+		<div  id="dd">
+			<p  id="pa">我们<a href="http://www.baidu.com" target="blank">自己</a></p>
+			<p>ta们<a href="http://www.baidu.com" target="blank">self</a></p>
+			<p>ni们<a href="http://www.baidu.com" target="blank">yourself</a></p>
+		</div>
+	<h2 id="gg">过滤选择器演示（三行四列表格）</h2>
+		<table id="tb">
+			<!-- 第一行 -->
+			<tr id="one">
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+			</tr>
+			<!-- 第二行 -->
+			<tr id="two">
+				<td>一 </td>
+				<td>二</td>
+				<td>三</td>
+				<td>四</td>
+			</tr>
+			<!-- 第三行 -->
+			<tr id="three">
+				<td>one</td>
+				<td>two</td>
+				<td>three</td>
+				<td></td>
+			</tr>
+		</table>
+</body>
+<script type="text/javascript">
+	//验证JQuery对象的本质是DOM数组
+	function but(){
+		//通过选择器选中节点，得到JQuery对象
+		var $ps = $('p');
+		for(var i = 0 ; i < $ps.length ; i++){
+			console.log($ps[i].innerText);		
+		}
+	}
+	//单击图片变小
+	$('img').click(function(){
+		$(this).width("150px").height("200px");
+	});
+	//双击图片变大
+	$('img').dblclick(function(){
+		$(this).width("300px").height("400px");
+	});
+	//单击标题图片显示隐藏
+	$('h1').click(function(){
+		$(this).next().toggle(500);
+		$(this).next().next().toggle(1000);
+		$(this).next().next().next().toggle(1500);
+	});
+	//选择器组
+	$('#pp').click(function(){
+		$('#p1,.p2').toggle(1000);
+	});
+	//层次选择器演示
+	$("#cc").click(function(){
+		console.log($('#pa ~ p'));
+	});
+	//过滤选择器演示
+	$('#tb').click(function(){
+		console.log('第一个单元格: ' + $('td:first')[0].innerHTML);
+		console.log('最后一个单元格: ' + $('td:last')[0].innerText);
+		console.log($('#tb tr:even'));
+		console.log($('#tb tr:odd'));
+		console.log($('td:eq(1)').prop("outerHTML"));
+		console.log($('td:gt(3)'));
+		console.log($('tr:not(#one,#three)'));
+		console.log($('h2:contains("选择")'));
+		console.log($('td:empty').prop('outerHTML'));
+		console.log('++++++++++++++++++++++++++++++++++++');
+		console.log($('[id]'));
+		console.log($('h2[id="gg"]').prop('outerHTML'));
+		console.log($('h2[id!="gg"]'));
+		console.log($('input[onclick="but();"]').prop("outerHTML"));
+		console.log($(':button').prop("outerHTML"));
+	});
+</script>
+</html>

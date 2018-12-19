@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+  <display-name></display-name>
+  <!-- 配置过滤器 -->
+  <!-- 这个配置的顺序 决定先经过哪个过滤器 -->
+  <filter>
+  	<filter-name>filter</filter-name>
+  	<filter-class>web.CommentFilter</filter-class>
+  	<!-- 初始化参数 -->
+  	<init-param>
+  		<param-name>illegalStr</param-name>
+  		<param-value>猪</param-value>
+  	</init-param>
+  </filter>
+  <filter-mapping>
+  	<filter-name>filter</filter-name>
+  	<url-pattern>/process</url-pattern>
+  </filter-mapping>
+  <filter>
+  	<filter-name>filtera</filter-name>
+  	<filter-class>web.CommentFilterA</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>filtera</filter-name>
+  	<url-pattern>/process</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <servlet-name>commentServlet</servlet-name>
+    <servlet-class>web.CommentServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>commentServlet</servlet-name>
+    <url-pattern>/process</url-pattern>
+  </servlet-mapping>	
+</web-app>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <display-name></display-name>
+  <servlet>
+  	<servlet-name>helloServlet</servlet-name>
+  	<!-- 完整的类名 -->
+  	<servlet-class>web.HelloServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>dateServlet</servlet-name>
+  	<!-- 完整的类名 -->
+  	<servlet-class>web.DateServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>empServlet</servlet-name>
+  	<!-- 完整的类名 -->
+  	<servlet-class>web.AddEmpServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>queryServlet</servlet-name>
+  	<!-- 完整的类名 -->
+  	<servlet-class>web.QueryServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>delServlet</servlet-name>
+  	<!-- 完整的类名 -->
+  	<servlet-class>web.DelServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>alterServlet</servlet-name>
+  	<!-- 完整的类名 -->
+  	<servlet-class>web.AlterServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>modifyServlet</servlet-name>
+  	<!-- 完整的类名 -->
+  	<servlet-class>web.ModifyServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>someServlet</servlet-name>
+  	<!-- 完整的类名 -->
+  	<servlet-class>web.SomeServlet</servlet-class>
+  	<!-- 初始化参数 -->
+  	<init-param>
+  		<param-name>school</param-name>
+  		<param-value>山东师范大学</param-value>
+  	</init-param>
+  	<!-- 容器启动后，立即创建servlet对象，等待请求过来
+  	参数值要求是一个大于等于0的整数，越小 ，优先级越高 -->
+	<!-- <load-on-startup>1</load-on-startup> -->
+  </servlet>  
+  
+  <servlet-mapping>
+  	<!-- 两个类名要一致 -->
+  	<servlet-name>helloServlet</servlet-name>
+	<!-- 以/开头 -->
+	<url-pattern>/hello</url-pattern>  	
+  </servlet-mapping>
+  <servlet-mapping>
+  	<!-- 两个类名要一致 -->
+  	<servlet-name>dateServlet</servlet-name>
+	<!-- 以/开头 -->
+	<url-pattern>/date</url-pattern>  	
+  </servlet-mapping>
+  <servlet-mapping>
+  	<!-- 两个类名要一致 -->
+  	<servlet-name>empServlet</servlet-name>
+	<!-- 以/开头 -->
+	<url-pattern>/emp</url-pattern>  	
+  </servlet-mapping>
+  <servlet-mapping>
+  	<!-- 两个类名要一致 -->
+  	<servlet-name>queryServlet</servlet-name>
+	<!-- 以/开头 -->
+	<url-pattern>/query</url-pattern>  	
+  </servlet-mapping>
+  <servlet-mapping>
+  	<!-- 两个类名要一致 -->
+  	<servlet-name>delServlet</servlet-name>
+	<!-- 以/开头 -->
+	<url-pattern>/del</url-pattern>  	
+  </servlet-mapping>
+  <servlet-mapping>
+  	<!-- 两个类名要一致 -->
+  	<servlet-name>alterServlet</servlet-name>
+	<!-- 以/开头 -->
+	<url-pattern>/alter</url-pattern>  	
+  </servlet-mapping>
+  <servlet-mapping>
+  	<!-- 两个类名要一致 -->
+  	<servlet-name>modifyServlet</servlet-name>
+	<!-- 以/开头 -->
+	<url-pattern>/modify</url-pattern>  	
+  </servlet-mapping>
+  <servlet-mapping>
+  	<!-- 两个类名要一致 -->
+  	<servlet-name>someServlet</servlet-name>
+	<!-- 以/开头 -->
+	<url-pattern>/some</url-pattern>  	
+  </servlet-mapping>
+  
+</web-app>

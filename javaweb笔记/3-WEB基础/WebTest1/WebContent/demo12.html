@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>创建自定义对象</title>
+<style type="text/css">
+	button{
+		text-align: center ;
+		width: 200px ;
+		height: 30px;
+		margin: 5px auto ;
+	}
+</style>
+<script type="text/javascript">
+	//使用第一种方式创建对象
+	function test1(){
+		var person = new Object();
+		person.name = "张迪";
+		person.age = 22;
+		person.work = function(){
+			alert("在山东师范大学学习！");
+		};
+		//使用对象
+		alert("姓名： " + person.name + "，年龄："  + person.age);
+		person.work(); 		
+	}
+	
+	//预置一个带格式要求的对象
+	function person(name , age){
+		//定义name和age属性
+		this.name = name ;
+		this.age = age ;
+		//定义方法show
+		this.show = function(){
+			alert(this.name + "也在山师上学啊！");
+		};
+	}
+	//使用第2种方式创建对象
+	function test2(){
+		//创建对象
+		var per = new person("张迪啊" , 22);
+		//使用对象
+		alert("name: " + per.name + " , age: " + per.age);
+		per.show();
+	}
+	//使用第三种方式创建对象
+	function test3(){
+		//创建对象
+		var obj = {
+			"name" : "凌晨的咸鱼",
+			"age" : 23 ,
+			"work" : function(){alert("原来" + obj.name +"也是在山师aaaa！！！")}
+		}
+		//使用对象
+		alert("ID : " + obj.name + ", Age: " + obj.age);
+		obj.work();
+	}
+</script>
+</head>
+<body>
+	<div style="text-align: center;">
+		<button onclick="test1();">直接创建对象</button><br>
+		<button onclick="test2();">使用构造器创建对象</button><br>
+		<button onclick="test3();">使用JSON创建对象</button>
+	</div>
+</body>
+</html>

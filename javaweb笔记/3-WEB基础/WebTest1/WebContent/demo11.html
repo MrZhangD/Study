@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>购物车</title>
+<style type="text/css">
+	table{
+		margin:0 auto;
+		text-align:left;
+		width: 650px;
+	}	
+	td{
+		padding: 5px;
+	}
+	thead{
+		text-align:center;
+		background-color: #ccc;
+	}
+</style>
+<script type="text/javascript">
+
+	//添加购物车
+	function add_ShoppingCart(butt){
+		//1、根据点击的按钮，获取同行的商品名和单价
+		//根据点击的按钮，找到它的爷爷tr
+		var tr = butt.parentNode.parentNode;
+		//找出爷爷tr的所有td孩子
+		var tds = tr.getElementsByTagName("td");
+		//第一个td的内容是商品名
+		var name = tds[0].innerText;
+		//第二个td的内容是商品单价
+		var price = tds[1].innerText;
+		
+		//2、判断购物车里是否有此商品
+		//获取购物车里的商品
+		var flag = true;
+		var table = document.getElementById("ShoppingCart");
+		var sctrs = table.getElementsByTagName("tr");
+		for(var i=0 ; i<sctrs.length ; i++){
+			var sctr = sctrs[i];
+			var sctds = sctr.getElementsByTagName("td");
+			if(name == sctds[0].innerText)
+				flag = false ;
+		}
+		//3、创建一个tr，将其插入到购物车的table下
+		if(flag){
+			var tbody = document.getElementById("goods");
+			//在tbody下插入一行tr(insertRow:插入行	insertCell:插入单元格)
+			var ntr = tbody.insertRow();
+			ntr.innerHTML = 
+				'<td>'+ name +'</td>'+
+				'<td>'+ price +'</td>'+
+				'<td>'+
+					'<input type="button" value="-" onclick="reduce_good(this);">'+
+					' '+
+					'<input type="text" id="num" size="3" value="1" readonly="readonly" style="width: 40px;">'+
+					' '+
+					'<input type="button" value="+" onclick="add_good(this);">'+
+				'</td>'+
+				'<td>'+ price  +'</td>'+
+				'<td align="center"><input type="button" value="删除" onclick="delete_good(this);"></td>'
+			;	
+		}else{
+			alert("购物车里已有此种商品！");
+		}	
+		//4、计算总金额
+		total();
+	}
+	
+	//增加商品数量
+	function add_good(good){
+		//获取当前行的数量列单元格中的input数量显示框
+		var tr = good.parentNode.parentNode;
+		var inputs = tr.getElementsByTagName("td")[2].getElementsByTagName("input");
+		var input = inputs[1];
+		//数量加一
+		var number = input.value;
+		var str = number + " + 1" ;
+		input.value = eval(str);
+		//金额数增加
+		var money = tr.getElementsByTagName("td")[3];
+		var price = tr.getElementsByTagName("td")[1].innerText;
+		var str = input.value + "*" + price ;
+		money.innerText = eval(str);
+		//计算总金额
+		total();
+	}
+	//减少商品数量
+	function reduce_good(good){
+		//获取当前行的数量列单元格中的input数量显示框
+		var tr = good.parentNode.parentNode;
+		var inputs = tr.getElementsByTagName("td")[2].getElementsByTagName("input");
+		var input = inputs[1];
+		//数量减一
+		var number = input.value ;
+		if(number > 1){
+			var str = number + "-1";
+			input.value = eval(str);
+		}else{
+			alert("数量为1，不能再减少！");
+		}
+		//金额数减少
+		var money = tr.getElementsByTagName("td")[3];
+		var price = tr.getElementsByTagName("td")[1].innerText;
+		var str = input.value + "*" + price ;
+		money.innerText = eval(str);
+		//计算总金额
+		total();
+	}
+	
+	//删除购物车中的商品
+	function delete_good(good){
+		//获取当前行
+		var tr = good.parentNode.parentNode;
+		//删除当前行
+		tr.parentNode.removeChild(tr);
+		//计算总金额
+		total();
+	}
+	
+	//计算总金额（这个方法要在其他方法里调用，因为其它按钮的操作都会引起总金额的变化）
+	function total(){
+		//获取购物车里的商品行
+		var tbody = document.getElementById("goods");
+		var trs = tbody.getElementsByTagName("tr");
+		//遍历商品行的价格，并且相加
+		var sum = 0;
+		for(var i=0 ; i<trs.length ; i++){
+			var tds = trs[i].getElementsByTagName("td");
+			var str = sum + "+" + tds[3].innerText;
+			sum = eval(str);
+		}
+		//将总计显示在表格中
+		var total = document.getElementById("total");
+		var tds = total.getElementsByTagName("td");
+		tds[1].innerHTML = sum ;		
+	}
+	
+	
+	//确认购买
+	function purchase(){
+		//从购物车中获取商品名和商品数量
+		var tbody = document.getElementById("goods");
+		var trs = tbody.getElementsByTagName("tr");
+		var goods = new Array();
+		var sum = 0 ;
+		for(var i=0 ; i<trs.length ; i++){
+			var tds = trs[i].getElementsByTagName("td");
+			var name = tds[0].innerText;
+			var price = tds[1].innerText;
+			var num = tds[2].getElementsByTagName("input")[1].value;
+			var str = num + "+" + sum ;
+			sum = eval(str);
+			var total = tds[3].innerText;
+			goods[i] ="\n" + name + ": " + price + "元单件      "  + num + "件      " + "价格： " + total;
+		}
+		var total = document.getElementById("total");
+		var tds = total.getElementsByTagName("td");
+		var tprice = tds[1].innerText;
+		goods[trs.length] = "\n" + "总共" + sum + "件商品      " + "总价为：" + tprice + "元！";
+		alert(goods);
+	}
+</script>
+</head>
+<body>
+	<h1 align="center">购物列表</h1>
+	<table border="2px" cellspacing="0">
+		<!-- 表头行分组 -->
+		<thead>
+			<tr>
+				<td>商品</td>
+				<td>单价（元）</td>
+				<td>颜色</td>
+				<td>库存</td>
+				<td>好评率</td>
+				<td>操作</td>
+			</tr>
+		</thead>
+		<!-- 表主体行分组  -->
+		<tbody>
+			<tr>
+				<td>罗技M185鼠标</td>
+				<td>80</td>
+				<td>黑色</td>
+				<td>893</td>
+				<td>98%</td>
+				<td align="center"><input type="button" value="加入购物车" onclick="add_ShoppingCart(this);"></td>
+			</tr>
+			<tr>
+				<td>微软X470键盘</td>
+				<td>150</td>
+				<td>黑色</td>
+				<td>9028</td>
+				<td>96%</td>
+				<td align="center"><input type="button" value="加入购物车" onclick="add_ShoppingCart(this);"></td>
+			</tr>
+			<tr>
+				<td>洛克iPhone6手机壳</td>
+				<td>60</td>
+				<td>透明</td>
+				<td>672</td>
+				<td>99%</td>
+				<td align="center"><input type="button" value="加入购物车" onclick="add_ShoppingCart(this);"></td>
+			</tr>
+			<tr>
+				<td>蓝牙耳机</td>
+				<td>100</td>
+				<td>蓝色</td>
+				<td>8937</td>
+				<td>95%</td>
+				<td align="center"><input type="button" value="加入购物车" onclick="add_ShoppingCart(this);"></td>
+			</tr>
+			<tr>
+				<td>金士顿U盘</td>
+				<td>70</td>
+				<td>红色</td>
+				<td>482</td>
+				<td>100%</td>
+				<td align="center"><input type="button" value="加入购物车" onclick="add_ShoppingCart(this);"></td>
+			</tr>
+		</tbody>
+		
+	</table>
+	
+	<h1 align="center">购物车</h1>
+	<table border="2px" cellspacing="0" id="ShoppingCart">
+		<!-- 表头 -->
+		<thead>
+			<tr>
+				<td style="width: 189px;">商品</td>
+				<td>单价（元）</td>
+				<td  style="width:100px;">数量</td>
+				<td>金额（元）</td>
+				<td>操作</td>
+			</tr>
+		</thead>
+		<!-- 表主体 -->
+		<tbody id="goods">
+			<!-- <tr>
+				<td></td>
+				<td></td>
+				<td><input type="button" value="-">
+					<input type="text" size="3" value="0" readonly="readonly" style="width: 40px;">
+					<input type="button" value="+">
+				</td>
+				<td></td>
+				<td align="center"><input type="button" value="删除" onclick="delete();"></td>
+			</tr> -->
+		</tbody>
+		<!-- 表尾 -->
+		<tfoot id="total">
+			<tr>
+				<td colspan="3" align="center">总计</td>
+				<td></td>
+				<td align="center">
+					<input type="button" value="购买" onclick="purchase();">
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</body>
+</html>

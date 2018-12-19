@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JQuery事件</title>
+<style type="text/css">
+	#mp{
+		border: solid 2px #ccc;
+		width: 200px;
+		height: 100px;
+	}
+	#d1{
+		border: solid 2px #ccc;
+		width: 400px;
+		height: 200px;
+	}
+	#d2{
+		border: solid 2px #ccc;
+		width: 300px;
+		height: 150px;
+		margin: 20px auto;
+	}
+	#d3{
+		border: solid 2px #ccc;
+		width: 200px;
+		margin: 20px auto;
+		text-align: center;
+		padding:42px 0 ;
+	}
+	img{
+		width: 300px;
+		height: 450px;
+	}
+</style>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+	<h1>点击框内获取鼠标坐标</h1>
+	<div id="mp">
+	</div>
+	
+	<h1>演示事件冒泡</h1>
+	<div id="d1">
+		<div id="d2">
+			<div id="d3">
+				<a id="a" href="http://www.baidu.com">点击我</a>
+			</div>
+		</div>
+	</div>
+	
+	<h1 id="tg">JQuery的合成事件种类</h1>
+		<img alt="这是一张图片" src="images/1.jpg" id="img1">
+		<img alt="这是一张图片" src="images/2.jpg" id="img2">
+		
+	<h1 id="trfo">JQuery模拟操作（trigger事件）</h1>
+		<input type="text" value="Hello,JQuery!">
+		
+	<br><br><br><br><br><br><br><br><br><br>
+</body>
+<script type="text/javascript">
+	//获取鼠标坐标
+	$('#mp').click(function(e){
+		console.log(e.pageX + "," + e.pageY);
+	});
+	//演示事件冒泡 
+	$('div').click(function(e){
+		alert($(this).attr('id'));
+		//阻止冒泡事件
+		e.stopPropagation();
+	});
+	//演示JQuery和合成事件种类（hover）
+	$('img').hover(
+		//鼠标悬停时调用
+		function(){
+			$(this).css('width','360px').css('height','540px');
+		} , 
+		//鼠标离开时调用
+		function(){
+			$(this).width('300px').height('450px');
+		}
+	);
+	//演示toggle()
+	$('#tg').click(function(){
+		$('img').toggle(1000);
+	});
+	//JQuery的trigger()方法和focus()方法
+	$('input').focus(function(){
+		$('input').trigger("select");
+		console.log("input获得焦点并且被选中");
+	});
+	$('#trfo').click(function(){
+		$('input').trigger("focus");
+	});
+</script>
+</html>

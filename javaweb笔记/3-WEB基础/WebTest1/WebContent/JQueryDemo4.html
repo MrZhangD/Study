@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>城市下拉选移动功能</title>
+<style type="text/css">
+	table{
+		border: solid 2px #ccc;
+		border-spacing: 0px;
+		width:500px;
+		height:300px;
+		margin: 0px auto;
+	}
+	td{
+		border: solid 2px #ccc;
+		width: 166px;
+	}
+	select {
+		margin:40px;
+		text-align: center;
+		width: 130px;
+		height: 230px;
+	}
+	div{
+		text-align: center;
+	}
+	input{
+		width: 32px;
+		margin-top:20px;
+		margin-bottom: 20px;
+	}
+	option{
+		padding: 2px;
+		margin: 1px;
+	}
+</style>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+	<h1 align="center">下拉选移动功能</h1>
+	<table>
+		<tr>
+			<!-- 第一列  城市列1 -->
+			<td>
+				<!-- multiple是多选属性 -->
+				<select multiple="multiple" id="city1">
+					<option>北京市</option>
+					<option>上海市</option>
+					<option>广州市</option>
+					<option>深圳市</option>
+					<option>杭州市</option>
+					<option>南京市</option>
+					<option>天津市</option>
+					<option>青岛市</option>
+					<option>济南市</option>
+					<option>重庆市</option>
+					<option>烟台市</option>
+					<option>潍坊市</option>
+				</select>
+			</td>
+			<!-- 第二列  按钮列 -->
+			<td>
+				<div>
+					<input type="button" value=">" id="b1">
+					<input type="button" value=">>" id="b2">
+					<input type="button" value="<" id="b3">
+					<input type="button" value="<<" id="b4">
+				</div>
+			</td>
+			<!-- 第三列  城市列2-->
+			<td>
+				<select multiple="multiple" id="city2">
+					
+				</select>
+			</td>
+		</tr>
+	</table>
+</body>
+<script type="text/javascript">
+	//左到右单独添加
+	$('#b1').click(function(){
+		var $selected = $('#city1 option:selected');
+		$selected.removeAttr('selected');
+		$('#city2').append($selected);
+	});
+	//左到右全部添加
+	$('#b2').click(function(){
+		var $selected = $('#city1 option');
+		$selected.removeAttr('selected');
+		$('#city2').append($selected);
+	});
+	//右到左单独添加
+	$('#b3').click(function(){
+		var $selected = $('#city2 option:selected');
+		$selected.removeAttr('selected');
+		$('#city1').append($selected);
+	});
+	//右到左全部添加
+	$('#b4').click(function(){
+		var $selected = $('#city2 option');
+		$selected.removeAttr('selected');
+		$('#city1').append($selected);
+	});
+</script>
+</html>

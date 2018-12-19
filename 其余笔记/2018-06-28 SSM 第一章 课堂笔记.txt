@@ -1,0 +1,73 @@
+【为 MyEclipse 配置 MyBatis 提示】
+1. 用压缩工具打开 mybatis.jar
+2. 找到 "org/apache/ibatis/builder/xml/mybatis-3-config.dtd"
+3. 放到一个固定位置，例如我的位置：
+    G:\DTD文件\mybatis-3-config.dtd
+4. MyEclipse - Windows - Preferences
+5. 左边直接搜索：Catalog
+6. 右边选中"User Specified Entries"，点击Add
+7. "Location"选择dtd文件
+8. "Key"输入：
+    -//mybatis.org//DTD Config 3.0//EN
+9. OK
+
+
+【搭建MyBatis环境】
+1. 引入 jar 包
+    1.1. mybatis-3.2.2.jar
+    1.2. mysql-connector-for-java.jar
+2. 创建 MyBatis 核心配置文件
+    2.1. 在 src 下创建 mybatis-config.xml
+    2.2. 配置 <environments> 环境
+3. 在数据库中新建测试表 student
+    1. id    int          主键自增
+    2. name  varchar(20)  非空
+    3. age   int          非空
+4. 创建实体类：com.smbms.entity.Student.java
+    3.1. private int id;
+    3.2. private String name;
+    3.3. private int age;
+    3.4. 注意 private 字段小写开头
+    3.5. 提供 getter 和 setter
+5. 创建 MyBatis Mapper 映射文件
+    5.1. 在 src 下创建 student-mapper.xml
+    5.2. 配置增删改查SQL
+6. 使用
+    6.1. 创建测试类：com.smbms.test.TestStudentMapper.java
+    6.2. 引入Junit
+        6.2.1. 右键项目 - Build Path - Add Library
+        6.2.2. 选择JUnit - 版本4 - OK
+    6.3. 载入核心配置文件
+        InputStream is = Resources.getResourceAsStream("mybatis-config.xml")
+    6.4. 解析配置文件，创建Session工厂(SqlSessionFactory)
+        SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+        SqlSessionFactory factory = builder.build(is);
+    6.5. 执行操作
+        6.5.1. 获取SqlSession
+            SqlSession session = factory.openSession();
+        6.5.2. 执行
+            session.select("sql id");
+            session.selectList("sql id");
+            session.delete("sql id");
+            session.update("sql id");
+            session.insert("sql id");
+        6.5.3. 关闭SqlSession
+            session.close();
+
+
+【常见错误】
+1. "Could not find resource mybatis1-config.xml"
+    1.1. 找不到核心配置文件
+
+2. "Error opening SqlSession"
+    2.1. 打开SQL会话时出现错误，导致空指针
+    2.2. 检查核心配置文件的<environments>
+
+3. "The mapper element required a namespace attribute"
+    3.1. <mapper> 配置文件需要一个 namespace 命名空间属性
+
+
+
+
+
+

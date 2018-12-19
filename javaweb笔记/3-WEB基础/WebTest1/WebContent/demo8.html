@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JavaScript</title>
+<style type="text/css">
+	.button{
+		display:block;
+		margin:0px auto;
+		width: 100px;
+		height: 40px;
+		text-align: center;
+		font-family: '楷体';
+		font-size: 20px;
+	}
+	form{
+		text-align: center;
+		margin:50px auto;
+		width:500px;
+		height:186px;
+		border: 1px solid black;
+	}
+	form h3{
+		text-align: center;
+		border: 1px solid #ccc;
+		margin: 0px;
+		padding: 12px;
+	}
+	form p{
+		border: 1px solid #ccc;
+		margin:0px;
+		padding: 10px;
+	}
+	form div{
+		border:1px solid #ccc;
+		margin: 0px;
+		padding: 10px;
+	}
+	.error_msg{
+		font-weight:bold;
+		text-decoration:underline;
+		color:red;
+	}
+	h1,h2,h3{
+		text-align: center;
+	}
+</style>
+<script type="text/javascript">
+	//要调用的JS需要定义在 函数中
+	//function 函数名(参数) {函数体}
+	function b2() {
+		 alert('这是嵌入式JS');
+	}
+	function cal() {
+		//获取文本框，从中取值
+		var num = document.getElementById("num") ;
+		//获取span，从中取值
+		var result = document.getElementById("result") ;
+		//从文本框中取值
+		var n = num.value;
+		//如果n为空值或者不是数字。
+		if(n=="" || isNaN(n)){
+			//innerHTML是元素的内容
+			result.innerHTML = "请输入数字!!" ;
+		}else{
+			result.innerHTML = n*n ;			
+		}
+	}
+	
+	//生成一个随机数，由于该变量处于函数外部，因此是全局变量，该代码是在页面加载时执行的！
+	var number = Math.floor(Math.random()*100) ;
+	
+	function judge(){
+		var input = document.getElementById("input") ;
+		var out = document.getElementById("out") ;
+		var n = number ;
+		var m = input.value ;
+		if(m == "" || isNaN(m) || m>100 || m<0){
+
+	out.innerHTML = "请输入0-100范围内的整数！！" ;
+		}else{
+			if(m==n)
+				out.innerHTML = "恭喜回答正确！！" ;
+			else if(m>n)
+				out.innerHTML = "大了！" ;
+			else
+				out.innerHTML = "小了！" ;
+		}
+	}
+	function see(){
+		alert("正确答案是：" + number) ;
+	}
+	function cal1(){
+		var num = document.getElementById("num1");
+		var result = document.getElementById("result1");
+		var n = num.value;
+		if(n==""||isNaN(n)){
+			result.innerHTML = "请输入正整数" ;
+		}else{
+			var sum = 1 ;
+			for(var i = 1 ; i<=n ; i++){
+				sum = sum*i;
+			}
+			result.innerHTML = sum ;
+		}
+	}
+	//排序自定义函数！！！
+	function sortnum(a,b){
+		return a-b ;
+	}
+	//排序函数！
+	function sortnumber(){
+		var str = document.getElementById("num2") ;
+		var span = document.getElementById("final");
+		var ary = new Array();
+		str1 = str.value;
+		ary = str1.split(",") ;
+		span.innerHTML = ary.sort(sortnum);
+	}
+	function age(){
+		var age = document.getElementById("age").value;
+		//利用正则判断年龄是否在0-99之间。
+		var reg = /^[0-9]{1,2}$/;
+		if(!reg.test(age.toString())){
+			alert("请输入正确的年龄 （0-99）");
+		}		
+	}
+	
+	function check_name(){
+		var name = document.getElementById("name").value;
+		var span = document.getElementById("name_msg");
+		var reg = /^[a-zA-Z0-9_]{3,13}$/;
+		if(!reg.test(name)){
+			//如果不匹配，增加错误样式。
+			//className属性等价于元素的class，即将元素的CSS变为相应的class
+			span.className = "error_msg";
+			return false;
+		}else{
+			//如果匹配，则移除错误样式。
+			span.className = "" ;
+			return true;
+		}
+	}
+	function calculation(){
+		var str = document.getElementById("str").value;
+		var span = document.getElementById("answer");
+		
+		try{
+			//将字符串当做一个表达式来计算，为了防止出现意外，字符串两边加上括号，eval()函数也能计算。
+			var r = eval("(" + str + ")");
+			span.innerHTML = r ;
+		}catch(e){
+			//如果执行时发生异常，则给与提示
+			span.innerHTML = "输入有误，请重新输入！";
+		}
+	}
+</script>
+<!-- 引用.JS文件，必须写成双标签标记 -->
+<script src="js/demo8.js" type="text/javascript"></script>
+</head>
+<body>
+	<!-- 表单用于输入登录信息，将信息提交给服务器 -->
+	<!-- onsubmit是表单提交事件，在点击提交按钮时触发，触发时先调用onsubmit内的方法，
+		若该方法返回true则会提交表单，返回false则不提交。
+		即：此处声明的方法可以起到拦截提交的作用（相当于一个验证表单的作用，验证通过在提交给服务器） 
+		注意：onsubmit中必须要写return，不然表达会永远提交-->
+	<h3>利用正则表达式验证账号密码</h3>
+	<form action="http://www.baidu.com" onsubmit="return check_name();">
+		<h3>登录</h3>
+		<p>
+			账号：<input type="text" id="name" onblur="check_name();">
+			<span id="name_msg">&nbsp;3-13个字符(字母、数字、下划线)</span>
+		</p>
+		<p>
+			密码：<input type="password" id="pwd" onblur="check_pwd();">
+			<span id="pwd_msg">&nbsp;3-20个字符(字母、数字、下划线)</span>
+		</p>
+		<div><input type="submit" value="登录"></div>
+	</form>
+	
+	<h1>事件定义式JS</h1>
+	<input class="button" type="button" value="按钮1" onclick="alert('这是事件定义式JS');"><br>
+	<input class="button" type="button" value="按钮2" onclick="b2();"><br>
+	<input class="button" type="button" value="按钮3" onclick="b3();"><br>
+	<h3>计算</h3>
+		<p align="center">
+		<input type="text" id="num">
+		<input type="button" value="平方"  onclick="cal();">
+		=
+		<span id="result"></span>
+		</p>
+		
+		<p align="center">
+		<input type="text" id="num1">
+		<input type="button" value="阶乘"  onclick="cal1();">
+		=
+		<span id="result1"></span>
+		</p>
+	<div style="text-align: center;">
+	<h2>猜数字游戏</h2>
+	<input type="text" id="input">
+	<input type="button" value="猜测" onclick="judge();">
+	<p>结果：
+		<span id="out"></span>
+	</p>
+	<input type="button" value="查看答案" onclick="see();"><br>
+	<h3>数字排序</h3>
+	<input type="text" id="num2">
+	<input type="button" value="排序" onclick="sortnumber();">
+	<p>结果：
+		<span id="final"></span>
+	</p>
+	<h3>测试onblur事件，即元素失去焦点时发生事件。</h3>
+	年龄：<input type="text" id="age" onblur="age();">
+	<h3>简易计算器</h3>
+	<input type="text" id="str">
+	<input type="button" value="=" onclick="calculation()">
+	<span id="answer">计算结果</span>
+	</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+
+
+类集就是一组java实现的数据结构，所谓的类指的就是对象数组的应用
+整个类集里面一共包括以下几个核心接口 
+1、Collection：(1) List(80%)（常用的子类：ArrayList(90%)、Vector(10%)） ，(2) Set(20%)（HashSet、TreeSet）	
+	注意：以后再非排序的情况下，只要是判断重复元素依靠的永远都是hashCode()与equals()。 
+	写完Book类后点击Source选择 Generate hashCode() and equals() 就可以产生这两个方法
+2、Map	：Collection每一次都只会保存一个对象，而Map主要负责保存一对对象的信息，包括Key和Value	（1）HashMap	（2）Hashtable
+3、Iterator ， Enumeration
+
+Map存放数据的最终目的实际上就是为了信息的查找，但是Collection存放数据的目的是为了输出。
+
+
+
+
+类集就是动态对象数组
+1、Collection
+	1、Collection接口
+		Collection是整个类集之中单值保存的最大接口，即：每一次可以向 集合中保存一个对象
+		Collection中常用的几个操作方法：
+		（1）	 public boolean add(E e) 	普通	 	向集合里面保存数据
+		（2）	 public boolean addAll(Collection<? extends E> c)	普通		追加一个集合
+		（3）	 public void clear()	普通		清空集合（根元素为null）
+		（4）	 public boolean contains(Object o)		普通  		判断是否含有指定内容（需要equals()支持）
+		（5） 	 public boolean isEmpty()		普通		判断集合是否为空集合
+		（6）	 public boolean remove(Object o)		普通		删除对象（需要equals()支持）
+		（7）	 public int size()		普通		取得集合中的元素个数
+		（8）	 public Object[] toArray()		普通		将集合变为对象数组保存
+		（9）	 public Iterator<E> itrator()	普通		为Iterator接口实例化
+		
+	2、List对Collection接口扩充的方法
+		（1）	 public E get(int index)		普通		取得指定索引编号的内容（从0开始）
+		（2）	 public	E set(int index ， E element)		普通		修改指定索引编号的内容
+		（3）	 Public ListIterator<E> listIterator ()		普通		为ListIterator接口实例化
+		
+	ArrayList 和 vector 的区别
+		 NO		   区别			ArrayList（90%）					vector(10%)	
+		（1）	推出时间			 JDK1.2推出			    		JDK1.0推出
+		（2）	性能				  异步处理							同步处理
+		（3）	数据安全性			 非线程安全							线程安全
+		（4）	输出			Iterator、ListIterator、foreach		Iterator、ListIterator、foreach、Enumeration
+	
+	3、集合输出：Iterator(95%) , ListIterator(0.05%)双向 , Enumeration(4.9%) , foreach(0.05%)
+		重点掌握 Iteration 迭代输出，这是核心（一般只用Iterator接口输出集合）。然后Enumeration也必须掌握！	
+	
+2、Map：
+	1、Map接口的主要操作方法：
+		（1）	public V put(K key , V value)	普通 		向集合中保存数据
+		（2）	public V get(Object key)		普通		根据key查找对应的value数据
+		（3）	public Set<Map.Entry<K,V>> entrySet()	普通		将Map集合转换为Set集合		这个方法目的是使用iterator方法实现输出
+		（4）	public Set<K> KeySet()			普通		取出全部的Key
+	2、HashMap和Hashtable的区别
+		NO			区别点			HashMap(90%)		Hashtable(10%)
+		(1)			推出时间			JDK1.2推出			JDK1.0推出
+		(2)			性能				异步处理				同步处理
+		(3)			数据安全性			非线程安全				线程安全
+		(4)			设置null			允许为null			不允许Key和value为null
+	3、在Map接口里面定义有一个将Map集合转化为Set集合的方法： 
+		public Set<Map.Entry<K,V>> entrySet() Map集合利用Iterator接口输出的步骤：
+  		(1)、利用Map接口的entrySet()方法将Map集合变为Set集合，里面的泛型是Map.Entry
+  		(2)、利用Set集合中的iterator()方法将Set集合进行Iterator输出；
+  		(3)、每一次Iterator循环取出的都是Map.Entry接口对象，利用此对象进行key与value的取出
+  		
+ 附加：Stack类，栈类， 属于Vector的子类 ， 但只使用自己的两个方法：public E push(E item) ; public E pop() ; 	
+ 		栈的这种操作现在唯一还算是有点能够编程的应用，就在Android上
+ 	Properties类是Hashtable的子类，主要进行属性的操作，就是从.properties资源文件中取得属性：三个操作方法：
+ 		(1)、设置属性：	 public Object setProperty(String Key , String value) ;	
+ 		(2)、取得属性：	 public String getProperty(String Key) ,  如果Key不存在返回null
+ 		(3)、取得属性：	 public String getProperty(String Key , String defaultValue) , 如果Key不存在返回默认值
+ 		(4)、数据的输出操作： public void store(OutputStream out,String comments)throws IOException 
+ 		
+		

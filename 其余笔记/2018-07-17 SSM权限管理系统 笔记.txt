@@ -1,0 +1,222 @@
+【系统需求分析】
+1. 使用SSM实现简单的权限管理系统。
+2. 不同角色的用户可以进行登录注册。
+3. 登录时需要验证其权限。
+4. 一个用户可以拥有多个角色。
+
+
+【数据库】
+1. 使用MySQL。
+2. 数据库名：ssm。
+3. 数据库编码：utf8。
+
+
+【用户表】sys_user
+u_id        int             用户编号，主键，自增
+u_email     varchar(50)     用户邮箱，作为登录账号使用，非空
+u_pwd       varchar(32)     用户的密码，使用MD5加密，非空
+u_name      varchar(20)     用户的名字，允许为空
+
+-- 创建用户表
+create table sys_user
+(
+	u_id int primary key auto_increment comment '用户编号',
+	u_email varchar(50) not null comment '用户邮箱',
+	u_pwd varchar(32) not null comment '用户密码',
+	u_name varchar(20) null comment '用户名称'
+) comment '用户表';
+
+
+【角色表】sys_role
+r_id        int             角色编号，主键，自增
+r_code      varchar(20)     角色编码，非空
+r_name      varchar(20)     角色名称，非空
+r_desc      varchar(50)     角色的描述，允许为空
+
+-- 创建角色表
+create table sys_role
+(
+	r_id int primary key auto_increment comment '角色编号',
+	r_code varchar(20) not null comment '角色编码',
+	r_name varchar(20) not null comment '角色名称',
+	r_desc varchar(20) null comment '角色描述'
+) comment '角色表';
+
+
+【关系表：用户-角色】 
+u_id        int             用户编号，外键，非空
+r_id        int             角色编号，外键，非空
+
+-- 关系表：用户-角色
+create table sys_user_role
+(
+	u_id int not null comment '用户编号',
+	r_id int not null comment '角色编号'
+) comment '关系表，用户-角色';
+
+
+【IDEA创建项目】
+1. 项目类型：Java Enterprise
+2. 项目名称：ssm
+3. 引入jar包，并添加引用：
+    3.1. MyBatis (3.4.2)：
+        mybatis-3.4.2.jar
+    3.2. MySQL驱动：
+        mysql-connector-for-java-x.x.jar
+    3.3. Spring (4.3.7.RELEASE)：
+        spring-context.jar
+        spring-beans.jar
+        spring-aop.jar
+        spring-jdbc.jar
+        spring-tx.jar
+        spring-expression.jar
+        spring-test.jar
+        spring-web.jar
+        spring-webmvc.jar
+        mybatis-spring-1.3.1.jar
+    3.4. JSTL (1.2.1)：
+        javax.servlet.jsp.jstl.jar
+        jstl-impl.jar
+    3.5. 数据库连接池：
+        commons-dbcp-1.4.jar
+        commons-pool-1.6.jar
+    3.6. 其他：
+        apache-log4j-1.2.17.jar
+        aspectjweaver.jar
+        commons-logging.jar
+4. 添加文件夹：
+    4.1. resources，作为资源。
+    4.2. test，作为测试。
+    4.3. resources/spring，用于存放所有spring相关的配置。
+    4.4. resources/properties，用于存放所有属性配置文件。
+5. 在src下创建包：
+    5.1. com.ssm.entity，用于存放实体类
+    5.2. com.ssm.dao，用于存放Mapper
+    5.3. com.ssm.service，用于存放业务接口
+    5.4. com.ssm.service.impl，用于存放业务实现
+    5.5. com.ssm.controller，用于存放控制器
+    5.6. com.ssm.aop，用于存放AOP增强处理
+6. 配置数据库链接信息：
+    6.1. 在 resources/properties 下创建 database.properties。
+    6.2. 内容如下：
+        # 数据库链接相关配置
+        mysql.driver=com.mysql.cj.jdbc.Driver
+        mysql.url=jdbc:mysql://localhost:3306/ssm
+        mysql.username=root
+        mysql.password=root
+7. 配置 log4j 配置信息：
+    7.1. 在 resources/properties 下创建 log4j.properties。
+    7.2. 内容如下：
+        # Global logging configuration
+        log4j.rootLogger=DEBUG, stdout
+        # MyBatis logging configuration...
+        #log4j.logger.org.mybatis.example.BlogMapper=TRACE
+        # Console output...
+        log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+        log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+        log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
+8. 创建实体类：
+    8.1. 在 src/com.ssm.entity 下创建 User.java：
+    8.2. 内容如下：
+        public class User {
+            private int id;         // 用户编号
+            private String email;   // 用户邮箱
+            private String pwd;     // 用户密码
+            private String name;    // 用户名称
+        }
+9. 创建Mapper：
+    9.1. 在 src/com.ssm.dao 下创建 UserMapper.java：
+        public interface UserMapper {
+            List<User> selectAll();
+        }
+    9.2. 在 src/com.ssm.dao 下创建SQL映射文件 UserMapper.xml：
+        <mapper namespace="com.ssm.dao.UserMapper">
+            <resultMap id="userFullMap" type="com.ssm.entity.User">
+                <id property="id" column="u_id"/>
+                <result property="email" column="u_email"/>
+                <result property="pwd" column="u_pwd"/>
+                <result property="name" column="u_name"/>
+            </resultMap>
+            <select id="selectAll" resultMap="userFullMap">
+                select * from sys_user
+            </select>
+        </mapper>
+10. 创建Service：
+    10.1. 在 src/com.ssm.service 下创建Service接口：
+        public interface UserService {
+            List<User> getAll();
+        }
+    10.2. 在 src/com.ssm.service.impl 下创建Service实现：
+        @Service
+        public class UserServiceImpl implements UserService {
+            @Autowired
+            private UserMapper userMapper;
+
+            @Override
+            public List<User> getAll() {
+                return userMapper.selectAll();
+            }
+        }
+11. 创建 spring-dao 相关配置：
+    11.1. 在 resources/spring 下创建spring-dao.xml
+    11.2. 引入外部配置文件：
+        <context:property-placeholder location="classpath:properties/database.properties"/>
+    11.3. 配置数据源(DBCP)：
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+            <property name="driverClassName" value="${mysql.driver}"/>
+            <property name="url" value="${mysql.url}"/>
+            <property name="username" value="${mysql.username}"/>
+            <property name="password" value="${mysql.password}"/>
+        </bean>
+    11.4. 配置Session工厂：
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+            <property name="dataSource" ref="dataSource"/>
+            <property name="typeAliasesPackage" value="com.ssm.entity"/>
+        </bean>
+    11.5. 扫描Mapper：
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+            <property name="basePackage" value="com.ssm.dao"/>
+        </bean>
+12. 创建 spring-service 相关配置：
+    12.1. 引入 spring-dao.xml：
+        <import resource="classpath:spring/spring-dao.xml"/>
+    12.2. 扫描所有 @Service 注解，并添加到Spring容器中：
+        <context:component-scan base-package="com.ssm.service"/>
+13. 创建测试类 UserServiceTest：
+    @RunWith(SpringJUnit4ClassRunner.class)
+    @ContextConfiguration(locations = {"classpath:spring/*.xml"})
+    public class UserServiceTest {
+        @Autowired
+        public UserService userService;
+
+        @Test
+        public void getAll() {
+            List<User> list = userService.getAll();
+            for (User item : list) {
+                System.out.println(item);
+            }
+        }
+    }
+14. 创建 spring-mvc 相关配置：
+    14.1. 在 resources/spring/ 下创建 spring-mvc.xml。
+    14.2. 配置视图解析器：
+        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <property name="prefix" value="/WEB-INF/views/"/>
+            <property name="suffix" value=".jsp"/>
+        </bean>
+15. 配置 web.xml：
+    15.1. 配置SpringMVC的前端控制器：
+        <servlet>
+            <servlet-name>springmvc</servlet-name>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+            <init-param>
+                <param-name>contextConfigLocation</param-name>
+                <param-value>classpath:spring/spring-mvc.xml</param-value>
+            </init-param>
+            <load-on-startup>1</load-on-startup>
+        </servlet>
+    15.2. 配置映射，将所有请求交付给Spring进行处理：
+        <servlet-mapping>
+            <servlet-name>springmvc</servlet-name>
+            <url-pattern>/</url-pattern>
+        </servlet-mapping>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name></display-name>
+  <servlet>
+    <servlet-name>AddCookieServlet</servlet-name>
+    <servlet-class>web.AddCookieServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>FindCookieServlet</servlet-name>
+    <servlet-class>web.FindCookieServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DelCookieServlet</servlet-name>
+    <servlet-class>web.DelCookieServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Find_addCookieServlet</servlet-name>
+    <servlet-class>web.Find_addCookieServlet</servlet-class>
+  </servlet>
+
+
+
+  <servlet-mapping>
+    <servlet-name>AddCookieServlet</servlet-name>
+    <url-pattern>/addcookie</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FindCookieServlet</servlet-name>
+    <url-pattern>/findcookie</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DelCookieServlet</servlet-name>
+    <url-pattern>/delcookie</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Find_addCookieServlet</servlet-name>
+    <url-pattern>/findadd</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

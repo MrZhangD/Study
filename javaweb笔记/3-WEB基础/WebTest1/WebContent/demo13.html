@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JS中的事件</title>
+<style type="text/css">
+	input{
+		width: 120px;
+		height: 30px;
+		margin: 10px auto;
+	}
+	div{
+		text-align: center;
+	}
+</style>
+<script type="text/javascript">
+	//键盘事件
+	function myKeyDown(e)
+	{
+	    var keycode;
+	    var keychar;
+	    //有的浏览器的windows对象没有全局性的event属性，所以要自己创建并传入一个event参数来使用；
+	    //而有的浏览器的windows有全局性的event属性，所以可以直接使用event
+		//如果有window.event值，则使用e.keyCode获取按下键的Unicode值（适用于Internet Explorer/Chrome浏览器）
+		//如果没有window.event，则使用e.which获取按下键的Unicode值（适用于Netscape/Firefox/Opera浏览器）
+	    keycode = window.event ? e.keyCode : e.which;
+		//获取对应Unicode码的字符（即键盘上显示的字符）
+	    keychar = String.fromCharCode(keycode);
+	    console.log("按键码：" + keycode + ' ——> ' + "字符：" + keychar + "-------此键按下！！");
+	}
+	function myKeyUp(e){
+		var keycode;
+	    var keychar;
+	    
+	    keycode = window.event ? e.keyCode : e.which;
+		//获取对应Unicode码的字符（即键盘上显示的字符）
+	    keychar = String.fromCharCode(keycode);
+	    console.log("按键码：" + keycode + ' ——> ' + "字符：" + keychar + "-------此键抬起！！");
+	}
+	function myKeyPress(e){
+		var keycode;
+	    var keychar;
+	    
+	    keycode = window.event ? e.keyCode : e.which;
+		//获取对应Unicode码的字符（即键盘上显示的字符）
+	    keychar = String.fromCharCode(keycode);
+	    console.log("按键码：" + keycode + ' ——> ' + "字符：" + keychar + "-------此键按下并抬起！！");
+	}
+	
+	//HTML事件（状态改变事件）
+	function start(){
+		console.log("演示onload事件，在网页加载完毕后就触发！");
+	}
+	
+	function mySelect(){
+		console.log("此文本框中的内容被选中！");
+	}
+	function myChange(){
+		console.log("此文本框中的内容改变了！");
+	}
+	function myFocus(){
+		console.log("此文本框得到光标（焦点）！！");
+	}
+	function myBlur(){
+		console.log("此文本框失去焦点（光标）！！");
+	}
+	/*窗口尺寸变化 ，这相当于全局的方法*/ 
+	window.onresize = function () {  
+        console.log("窗口尺寸发生变化了！");  
+    }
+    /*滚动条移动，这相当于全局的方法*/  
+    window.onscroll = function () {  
+        console.log("滚动条滚动！！！");  
+    }  
+</script>
+</head>
+<body onload="start();">
+	<h1 align="center">鼠标事件</h1>
+	<div>
+		<input type="button" value="单击此处" onclick="javascript:{alert('你单击了按钮！');}"><br>
+		<input type="button" value="双击此处" ondblclick="javascript:{alert('你双击了按钮！');}"><br>
+		<input type="button" value="鼠标按下此处" onmousedown="javascript:{console.log('你按下了鼠标！');}" onmouseup="javascript:{console.log('你抬起了鼠标！')}"><br>
+		<input type="button" value="鼠标指向此处" onmouseover="javascript:{console.log('你鼠标正悬浮在了此处！');}" onmouseout="javascript:{console.log('你鼠标离开了此处！');}"><br>
+		<input type="button" value="鼠标进入此处" onmouseenter="javascript:{console.log('鼠标进入了此处！');}" onmouseleave="javascript:{console.log('鼠标离开了此处！')}"><br>
+		<input type="button" value="鼠标在此处移动" onmousemove="javascript:{console.log('鼠标正在此处移动！');}"><br>
+	</div>	
+	<h1 align="center">键盘事件</h1>
+	<div>
+		<p>演示keydown和keyup: <input type="text" onkeydown="myKeyDown(event);" onkeyup="myKeyUp(event);"></p>
+		<p>演示keypress: <input type="text" onkeypress="myKeyPress(event);"></p>
+	</div>
+	<h1 align="center">状态改变事件（HTML事件）</h1>
+	<div>
+		<p>演示select事件： <input type="text" onselect="mySelect();"></p>
+		<p>演示change事件和focus事件和blur事件： <input type="text" onfocus="myFocus();" onchange="myChange();" onblur="myBlur();"></p>
+		
+	</div>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

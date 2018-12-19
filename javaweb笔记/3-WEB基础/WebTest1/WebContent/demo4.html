@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CSS声明</title>
+<style type="text/css">
+	body{
+		background-image:url('images/per.jpg');
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
+		background-attachment: fixed;
+		background-size:50% 100%;
+	}
+	p{
+		border-left:5px dashed red;
+		border-bottom:4px dashed blue;
+		border-right:3px solid #ccc;
+		border-top:2px solid yellow;
+		width: 100px;
+		height: 100px;
+		overflow: auto;
+	}
+	.div1{
+		width: 200px;
+		height: 200px;
+		padding:10px;
+		border:2px solid red;
+		margin: 20px;
+		background-color: #ccc;
+	}
+	.div2{
+		width: 200px;
+		height: 200px;
+		padding:8px;
+		border:4px solid blue;
+		margin:20px;
+	}
+	/*box模型的单边属性
+		设置4个值：上，右，下，左。
+		设置2个值：上下，左右。
+	*/
+	#div3{
+		width: 200px;
+		height: 200px;
+		padding:1px 5px 10px 20px;
+		border:4px solid green;
+		margin:10px 20px 30px 40px;
+	}
+	#div4{
+		width: 200px;
+		height: 200px;
+		padding-top:1px;
+		padding-right:5px;
+		padding-bottom:10px;
+		padding-left:20px;
+		border:4px solid green;
+		margin-top: 10px;
+		margin-right: 20px;
+		margin-bottom: 30px;
+		margin-left: 40px;
+	}
+	/*对边设置
+		margin:20px auto; 上下间距20px，水平方向居中
+	*/
+	#div5{
+		width: 100px;
+		height: 100px;
+		border:4px solid green;
+		margin: 20px auto;
+	}
+</style>
+</head>
+<body>
+	<h1>border声明</h1>
+	<p>这是一条测试border声明的p段落，这是一条测试border声明的p段落，这是一条测试border声明的p段落，这是一条测试border声明的p段落，这是一条测试border声明的p段落
+		，这是一条测试border声明的p段落，这是一条测试border声明的p段落，这是一条测试border声明的p段落</p>
+	<h2>box模型</h2>
+	<div class="div1">
+		<b>这是一个box模型的例子。</b>
+	</div>
+	<div class="div2">
+		<b>这是另一个box模型的例子。</b>
+	</div>
+	<div id="div3">
+		<b>这个测试box模型的单边属性。</b>		
+	</div>
+	<div id="div4">
+		<b>这个也是测试box模型的单边属性的。</b>
+	</div>
+	<div id="div5">
+		<b>这个是测试box模型的对边设置。</b>
+	</div>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>定时器</title>
+<style type="text/css">
+	div{
+		text-align: center;
+		border: 1px solid black;
+		width: 400px;
+		height: 140px;
+		margin: 50px auto;
+	}
+	#p1{
+		border-bottom: 1px solid #ccc;
+		padding: 22.8px;
+		margin: 0px auto;
+	}
+	#p2{
+		border-top: 1px solid #ccc;
+		padding: 22.8px;
+		margin: 0px auto;
+	}
+	h3{
+		text-align: center;
+	}
+	.show{
+		display: block;
+	}
+	.hide{
+		display: none;
+	}
+	#div1{
+		text-align: center;
+		border: 1px solid black;
+		width: 400px;
+		height: 600px;
+		margin: 50px auto;
+	}
+	.img1{
+		width:300px;
+		height: 500px;
+		margin: 50px auto;
+	}
+	.img1_enlarge{
+		width:320px;
+		height: 520px;
+		margin: 40px auto;
+	}
+	ul{
+		list-style-type: none;
+		border:2px solid #ccc;
+		width:400px;
+		height: 600px;
+		margin: 0px auto;
+		padding: 0px;
+	}
+	li{
+		width: 400px;
+		height: 600px;
+	}
+	.img2{
+		width:400px;
+		height: 600px;
+	}
+	.show{
+		display:block;
+	}
+	.hide{
+		display: none;
+	}
+</style>
+<script type="text/javascript">
+	//启用的定时器的ID，便于在其他方法里停止定期器
+	var id;
+	var id1;
+	var flag;
+	var n = 0;
+	var m = 0;
+	//周期性定时器制作实时时钟
+	function start(){
+		if(n == 0){
+			n++;
+			var span = document.getElementById("time");
+			span.innerHTML = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
+			id = setInterval(function(){
+				var span = document.getElementById("time");
+				span.innerHTML = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();		
+			},1000);
+		}
+	}
+	function stop(){
+		var span = document.getElementById("time") ;
+		clearInterval(id) ;
+		n = 0 ;
+	}
+	//一次性定时器动态提示信息
+	function del(){
+		var span = document.getElementById("delete") ;
+		span.className = "show" ;
+		setTimeout(function(){
+			var span = document.getElementById("delete") ;
+			span.className = "hide" ;
+		},500)
+	}
+	//周期性定时器制作秒表
+	function time_start(){
+		if(m == 0){
+			m++;
+			if(flag){
+				var str = document.getElementById("time_show").innerHTML;
+				var min = eval(str.substring(0,2) + "+0") ;	
+				var s = eval(str.substring(3,5) + "+0") ;	
+				var ss = eval(str.substring(6,8) + "+0") ;	
+			}else{
+				var min = 0 ;
+				var s = 0 ;
+				var ss = 0 ;
+			}
+			id1 = setInterval(function(){
+				var str_min = min ;
+				var str_s = s ;
+				var str_ss =ss ;
+				var span = document.getElementById("time_show");
+				if(ss < 10){
+					str_ss = "0" + ss;
+				}
+				if(s < 10){
+					str_s = "0" + s;
+				}
+				if(min < 10){
+					str_min = "0" + min;
+				}
+				var time =  str_min + ":" + str_s + ":" + str_ss;
+				span.innerHTML = time ;
+				ss++;
+				if(ss > 99){
+					ss = 0 ;
+					s++ ;
+				}
+				if(s > 59){
+					s = 0 ;
+					min++;
+				}
+			} , 10)
+		}
+	}
+	function time_stop(){
+		var span = document.getElementById("time_show");
+		clearInterval(id1) ;
+		span.innerHTML = "00:00:00" ;
+		flag = false ;
+		m = 0 ;
+	}
+	function time_pause(){
+		var span = document.getElementById("time_show");
+		clearInterval(id1) ;	
+		flag = true ;
+		m = 0 ;
+	}
+	//一次性定时器制作照片短时间变大
+	function enlarge(){
+		var img = document.getElementById("img_6") ;
+		img.className = "img1_enlarge" ;
+		setTimeout(function(){
+			var img = document.getElementById("img_6") ;
+			img.className = "img1" ;
+		} , 2000)
+	}
+	//图片轮播效果(全局的)
+	var i = 1 ;
+	setInterval(function(){
+		var img = document.getElementById("img_play");
+		if(i < 10){
+			if(i == 4){
+				img.setAttribute("src" , "images/" + i + ".png") ;
+			}else{
+				img.setAttribute("src" , "images/" + i + ".jpg");
+			}
+			if(i == 6)
+				i = 0;
+			i++;
+		}
+	},2000)	
+	
+	//另一个图片轮播效果
+	var index = 0; //控制图片循环的次数，默认为0
+	var j = 0;
+	function start1(){
+		setInterval(function(){
+			var ul = document.getElementById("imgs");
+			var lis = ul.getElementsByTagName("li");
+			//将显示的图片li隐藏
+			lis[j].className = "hide";
+			j++;
+			if(j>=lis.length){
+				j = 0;
+			}
+			//讲下一张隐藏的li显示出来
+			index++;
+			lis[index%lis.length].className = "show";
+		} , 1000)
+	}
+</script>
+
+</head>
+<body onload="start1()">
+	<h3>用周期性定时器做的时钟</h3>
+	<div>
+		<p id="p1">
+			当前时间：<span id="time"></span>
+		</p>
+		<p id="p2">
+			<input type="button" onclick="start();" value="启动">
+			<input type="button" onclick="stop();" value="停止">
+		</p>
+	</div>
+	<h3>一次性定时器做的动态提示信息</h3>
+	<div>
+		<p id="p1">
+			<input type="button" onclick="del();" value="删除">
+		</p>
+		<p id="p2">
+			<span id = "delete" class="hide">删除成功</span>
+		</p>
+	</div>
+	<h3>使用周期性定时器做一个秒表</h3>
+	<div>
+		<p id="p1">
+			<span id="time_show">00:00:00</span>
+		</p>
+		<p id="p2">
+			<input type="button" onclick="time_start();" value="开始">
+			<input type="button" onclick="time_pause();" value="暂停">
+			<input type="button" onclick="time_stop();" value="停止">
+		</p>
+	</div>
+	<h3>一次性定时器制作的点击照片变大</h3>
+	<div id="div1">
+		<img src="images/6.jpg" onclick="enlarge();" class="img1" id="img_6">
+	</div>
+	<h3>制作一个图片的轮播效果</h3>
+	<div id="div1">
+		<img src="images/6.jpg" class="img1" id="img_play">
+	</div>
+	<h3>另一种方法制作的图片轮播效果</h3>
+	<ul id="imgs">
+		<li class="show"><img src="images/1.jpg" class="img2"></li>
+		<li class="hide"><img src="images/2.jpg" class="img2"></li>
+		<li class="hide"><img src="images/5.jpg" class="img2"></li>
+		<li class="hide"><img src="images/6.jpg" class="img2"></li>
+	</ul>
+</body>
+</html>

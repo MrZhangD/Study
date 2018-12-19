@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>CSS演示</title>
+	<!-- 内部样式 -->
+	<style type="text/css">
+	/*层叠性*/
+	h2{
+		color: red;
+	}	
+	h2{
+		background-color: blue;
+	}
+	/*可以展示继承性*/
+	body{
+		font-family:'楷体';
+	}
+	/*优先级 对p段落*/ 
+	p{
+		color: red ;
+	}
+	p{
+		color: green ;
+	}
+	/* 类选择器  （选中所有的class="important"的元素进行修饰）*/
+	.important{
+		color:red;
+	}
+	/* id选择器 （根据id选中唯一的元素进行修饰） */
+	#hfour{
+		color:red;
+		font-family: '微软雅黑';
+	}
+	/*选择器组 给一组选择器选中的所有元素统一设置属性*/
+	.important,h1,#hfour{
+		font-size: 50px;	
+	}
+	</style>
+	<!-- 引用外部样式表 -->
+	<link rel="stylesheet" type="text/css" href="css/demo3.css">
+	<style type="text/css">
+		/*后代选择器 */
+		#p1 b{
+			color:red;
+		}
+		/*子元素选择器*/
+		#p1>b{
+			font-size: 30px;
+		}
+		/*伪类选择器*/
+		a:link {
+			color:blue;
+		}
+		a:visited {
+			color:red;
+		}
+		a:hover {
+			font-size: 30px;
+		}
+		/*选择激活（正在被鼠标点中的）的元素*/
+		#but:active {
+			background-color: blue;
+		}
+		/*选择有焦点的文本框*/
+		.t1:focus {
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<h1>如何使用CSS</h1>
+	<h2>CSS有三种用法</h2>
+	<h3 class="important">三级标题</h3>
+	<h4 class="important">四级标题</h4>
+	<h5 id="hfour">五级标题</h5>
+	
+	<!-- style属性中写内联样式 -->
+	<p	style="color:green;">1、内联样式</p>
+	<p>2、内部样式</p>
+	<p>3、外部样式</p>
+	<p id="p1">演示<u><b>派生选择器</b>下的<b>后代选择器</b></u>和<b>子元素选择器</b></p>
+	<p><a href="http://www.baidu.com" target="_blank">百度</a></p>
+	<p><input type="button" value="点我啊" id="but"></p>
+	<p><input type="text" class="t1"></p>
+</body>
+</html>

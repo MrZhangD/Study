@@ -1,0 +1,59 @@
+【Spring提供的注解】
+1. 注册bean到Spring容器中：
+    Component：相当于<bean />
+2. 特殊的注解：
+    2.1. Repository：用于标识DAO
+    2.2. Service：用于标识Service
+    2.3. Controller：用于标识控制器
+
+
+【使用注解实现Spring】
+1. 新建DAO接口：
+    public interface UserDao{
+        public void select();
+    }
+
+2. 为DAO接口创建实现：
+    @Repository("userDao")
+    public class UserDaoImpl implements UserDao{
+        public void select(){ ... }
+    }
+
+    2.1. 该注解用于将当前DAO实现类，注册到Spring容器中。
+    2.2. 类似于：<bean id="userDao" class="com.xxx.UserDaoImpl"/>
+
+3. 新建Service接口：
+    public interface UserService{
+        public void pager();
+    }
+
+4. 为Service接口创建实现：
+    @Service("userService")
+    public class UserServiceImpl implements UserService{
+        @Autowird
+        @Qualifier("userDao")
+        public UserDao dao;
+
+        public void pager(){
+            dao.select(); 
+        }
+    }
+
+    4.1. Service注解用于将当前业务类注册到Spring容器中。
+    4.2. 并且通过Autowird实现自动注入。
+    4.3. 相当于：
+        <bean id="userService" class="com.xxx.UserServiceImpl">
+            <property name="dao" ref="userDao"/>
+        </bean/>
+
+5. 启动Spring的组件扫描
+    <context:component-scan base-package="dao, service" />
+
+    5.1. Spring会自动扫描指定包下的所有注解（Component、Repository、Service、Controller）
+    5.2. 扫描到注解注册之后，会将其注册到Spring容器中。
+    5.3. 就相当于在配置文件中使用<bean/>手动注册一样。
+
+6. 使用：
+    ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+    UserService userService = (UserService)ctx.getBean("userService")
+    userService.pager();

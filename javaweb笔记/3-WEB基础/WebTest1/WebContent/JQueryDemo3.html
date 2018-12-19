@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JQuery操作DOM</title>
+<style type="text/css">
+	#input2{
+		margin: 10px;
+		text-align: center;
+		background-color: #ccc;
+	}
+	table{
+		border:solid 1px #ccc;
+		border-spacing: 0px;
+		width: 500px;
+		height: 120px;
+	}
+	td{
+		border:solid 2px #ccc;
+	}
+	.blue{
+		background-color: blue;
+		text-align: center;
+	}
+	.big{
+		font-size: 20px;
+	}
+</style>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+	<h1>读/写加点操作</h1>
+		<p id="p1">JQuery<b>可以读节点</b>的内容</p>
+		<p id="p2">JQuery可以修改节点的内容</p>
+		<input id="input1" type="text" value="这是一条只读的value值 ！！！！" readonly="readonly">
+		<input type="button" value="读取value值">
+		<br>
+		<input id="input2" type="text"  style="width:300px;" value="这是一条只读并且带有一些属性的value值 ！！！！" readonly="readonly">
+		<input type="button" value="修改value值">
+		<input type="button" value="读取属性值">
+		<input type="button" value="修改属性值">
+		
+	<h1>增/删节点的操作</h1>
+		<span>山东省:</span>
+		<ul id="sd">
+			<li>青岛</li>
+			<li id="jn">济南</li>
+			<li>烟台</li>
+			<li>潍坊</li>
+		</ul>
+		<input type="button" value="增加节点">
+		<input type="button" value="删除节点">
+		
+	<h1>JQuery的样式操作</h1>
+		<table id="tb">
+			<tr>
+				<td>第一行第一列</td>
+				<td>第一行第二列</td>
+			</tr>
+			<tr>
+				<td>第二行第一列</td>
+				<td>第二行第二列</td>
+			</tr>
+		</table>
+	<h1>JQuery遍历节点（参考第二个标题内的列表）</h1>
+		<input type="button" value="以烟台为起始点查看">
+</body>
+<script type="text/javascript">
+	//读取节点的内容
+	$('#p1').click(function(){
+		console.log("读取的html内容为：" + $('#p1').html());
+		console.log("读取的text内容为：" + $('#p1').text());
+	});
+	//修改节点的内容
+	$('#p2').click(function(){
+		$('#p2').html('aaaaa<u>aaaaaaa</u>aaaaaaaa');
+		console.log("内容修改成功!!");
+	});
+	//读取节点的value值
+	$('input[value="读取value值"]').click(function(){
+		console.log($('#input1').val());
+	});
+	//修改节点的value值
+	$('input[value="修改value值"]').click(function(){
+		$('#input2').val('没错，修改了value值');
+	});
+	//读取节点的属性值
+	$('input[value="读取属性值"]').click(function(){
+		console.log($('#input2').attr('style'));
+	});
+	//修改节点的属性值
+	$('input[value="修改属性值"]').click(function(){
+		$('#input2').attr('style','width:400px;');
+	});
+	//增加节点（创建并添加节点）
+	$('input[value="增加节点"]').click(function(){
+		//先创建节点
+		var $newCity1 = $('<li>威海1</li>');
+		var $newCity2 = $('<li>泰安2</li>');
+		var $newCity3 = $('<li>临沂3</li>');
+		var $newCity4 = $('<li>淄博4</li>');
+		//再添加节点
+		$('#sd').prepend($newCity1);
+		$('#sd').append($newCity2);
+		$('#jn').before($newCity3);
+		$('#jn').after($newCity4);
+	});
+	//删除节点
+	$('input[value="删除节点"]').click(function(){
+		$('li:contains("威海1")').remove();
+// 		$('li').remove('li:contains("威海1")');
+// 		$('ul').empty();
+	});
+	//样式操作
+	//1、追加样式和移除样式
+	$('td:first').hover(
+		function(){
+			$(this).addClass('blue').addClass('big');
+		},
+		function(){
+			$(this).removeClass();
+		}
+	);
+	//2、切换样式
+	$('td:eq(1)').click(function(){
+		$(this).toggleClass('blue');
+	});
+	//3、判断读取并设置
+	$('td:eq(2)').click(function(){
+		console.log($(this).css('width'));
+		console.log("第二个表格是否有blue样式：" + $('td:eq(1)').hasClass('blue'));
+		console.log("第三个表格是否有blue样式：" + $(this).hasClass('blue'));
+		$(this).css('background-color' , 'red');
+	});
+	//JQuery遍历节点
+	$('input[value="以烟台为起始点查看"]').click(function(){
+		console.log($('li:contains("烟台")').prev().html());
+		console.log($('li:contains("烟台")').siblings().text());
+		console.log($('ul').find('li:not(#jn)').text());
+		console.log($('li:contains("烟台")').parent().prop('outerHTML'));
+	});
+</script>
+</html>

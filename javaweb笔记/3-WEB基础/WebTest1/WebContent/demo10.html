@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>选择省市</title>
+<style type="text/css">
+	p{
+		text-align: center;
+		font-size: 30px;
+	}
+	div{
+		text-align: center;
+	}
+	.show{
+		display:block;
+	}
+	.hide{
+		display:none;
+	}
+</style>
+<script type="text/javascript">
+	function check_pro(){
+		var pro = document.getElementById("province");
+		var input = document.getElementById("display");
+		input.setAttribute("value" , pro.value);
+		//每次选择省份时，先清空市的下拉选项。
+		var select = document.getElementById("city");
+		select.value = "";
+		var city = select.getElementsByTagName("option");
+		for(var i = 1  ; i < city.length ; i++)
+			city[i].className = "hide";
+		//显示相应省份的城市
+		if(pro.value == "山东省"){
+			var city = document.getElementsByName("sd_pro");
+			for(var i = 0  ; i < city.length ; i++)
+				city[i].className = "show";
+		}
+		if(pro.value == "河北省"){
+			var city = document.getElementsByName("hb_pro");
+			for(var i = 0  ; i < city.length ; i++)
+				city[i].className = "show";
+		}
+		if(pro.value == "浙江省"){
+			var city = document.getElementsByName("zj_pro");
+			for(var i = 0  ; i < city.length ; i++)
+				city[i].className = "show";
+		}
+		if(pro.value == "江苏省"){
+			var city = document.getElementsByName("js_pro");
+			for(var i = 0  ; i < city.length ; i++)
+				city[i].className = "show";
+		}
+	}
+	function check_city(){
+		var city = document.getElementById("city");
+		var input = document.getElementById("display");
+		var str = input.value;
+		input.setAttribute("value" , str.substring(0 , str.indexOf("省")+1) + city.value);
+	}
+	
+	//另一种制作省市下拉的方法
+	//事先预置好每个省份所对应的市，一个二维数组
+	//0-无，1-山东省，2-河北省，3-江苏省
+	var cities = [
+		["-请选择-"],
+		["青岛市","济南市","烟台市"],
+		["石家庄","保定市","唐山市"],
+		["南京市","苏州市","无锡市"],
+	];
+	function change(){
+		//获取当前选中的省份
+		var pro = document.getElementById("provinces");
+		var pindex = pro.value;
+		//清空所有的市
+		var city = document.getElementById("cities");
+		city.innerHTML="";
+		//显示当前省份的市
+		var pcities = cities[pindex];
+		for(var i = 0 ; i < pcities.length ; i++){
+			//创建option节点
+			var option = document.createElement("option") ;
+			//设置新节点的值
+			option.setAttribute("value" , i) ;
+			option.innerHTML = pcities[i];
+			//将新节点追加到城市下拉选项中
+			city.appendChild(option);
+		}
+		//将选择好的省市展示出来
+// 		var input = document.getElementById("my_check");
+// 		var options = pro.getElementsByTagName("option");
+// 		var cities1 = city.getElementsByTagName("option");
+// 		var cindex = city.value;
+// 		input.value = options[pindex].innerHTML + cities1[cindex].innerHTML ;
+	}
+</script>
+</head>
+<body>
+	<p>请选择你所在的省市</p>
+	<div>
+		选择你所在省市：
+		<!-- option的内容是下拉选项显示的值，而value是select节点返回的值，返回的是选中的option的value值
+			onchange是值改变事件，当值发生改变时触发。
+		 -->
+		<select id="province" onchange="check_pro();">
+			<option value="" id="empty_pro"></option>
+			<option value="山东省" id="sd">山东省</option>
+			<option value="河北省" id="hb">河北省</option>
+			<option value="浙江省" id="jz">浙江省</option>
+			<option value="江苏省" id="js">江苏省</option>
+		</select>
+		<select id="city" onchange="check_city();">
+			<option value="" id="empty_city"></option>
+			<!-- 山东省 -->
+			<option value="青岛市" id="qd" name="sd_pro" class="hide">青岛市</option>
+			<option value="济南市" id="jn" name="sd_pro" class="hide">济南市</option>
+			<option value="烟台市" id="yt" name="sd_pro" class="hide">烟台市</option>
+			<!-- 河北省 -->
+			<option value="石家庄" id="sjz" name="hb_pro" class="hide">石家庄</option>
+			<option value="保定市" id="bd" name="hb_pro"  class="hide">保定市</option>
+			<option value="唐山市" id="ts" name="hb_pro" class="hide">唐山市</option>
+			<!-- 浙江省 -->
+			<option value="杭州市" id="hz" name="zj_pro" class="hide">杭州市</option>
+			<option value="宁波市" id="nb" name="zj_pro" class="hide">宁波市</option>
+			<option value="温州市" id="wz" name="zj_pro" class="hide">温州市</option>
+			<!-- 江苏省 -->
+			<option value="南京市" id="nj" name="js_pro" class="hide">南京市</option>
+			<option value="苏州市" id="sz" name="js_pro" class="hide">苏州市</option>
+			<option value="无锡市" id="wx" name="js_pro" class="hide">无锡市</option>
+		</select>
+		<br><br>
+		我选择的是：<input type="text" readonly="readonly" value="" id="display">
+	</div>
+	<div>
+		<p>选择你所在的省市（使用节点的增加删除操作制作）</p>
+		省：
+		<select id="provinces" onchange="change();">
+			<option value="0">-请选择-</option>
+			<option value="1">山东省</option>
+			<option value="2">河北省</option>
+			<option value="3">江苏省</option>
+		</select>
+		市：
+		<select id="cities">
+			<option>-请选择-</option>
+		</select>
+<!-- 		<br><br> -->
+<!-- 		我选择的是：<input type="text" readonly="readonly" id="my_check" value=""> -->
+	</div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+﻿创建目录
+    命令：mkdir 目录名
+    实例：mkdir Download
+
+
+删除文件/文件夹
+    命令：rm
+    参数：
+        r   删除的是目录
+        f   删除时不询问
+    例如：
+        rm -rf Download，表示删除Download文件夹，并且不询问
+
+
+切换工作目录
+    命令：cd
+    例如：
+        cd ~    表示回到家目录
+        cd /    表示前往根目录
+
+
+查看文件列表
+    命令：ls 或 ll
+
+
+复制
+    命令：cp
+    例如：
+        将 /home/root/123.txt 复制到 /etc/123.txt
+        cp /home/root/123.txt /etc/
+
+
+移动
+    命令：mv
+
+
+查看文件内容
+    命令：
+        head    从开头查看文件，默认10行
+        tail    从末尾查看文件，默认10行
+    例如： 
+        head -5 conf.xml
+
+
+编辑文件
+    命令：vi
+    例如：创建 test.txt 文件，并写入“测试”内容：
+        1. vi test.txt
+        2. 按一下“i”键，表示insert，切换到插入模式
+        3. 输入内容
+        4. 按“Esc”结束编辑，输入“:”切换到命令模式
+        5. 输入wq，保存并退出
+
+
+关机/重启
+    命令： 
+        shutdown    关机
+        reboot      重启
+
+
+配置虚拟网卡：
+    1. 点击“编辑 - 虚拟网络编辑器”
+    2. 删掉所有
+    3. 点击“添加网络”，新建一个虚拟网卡
+    4. 下面勾选“将主机虚拟适配器连接到此网络”
+    5. 勾选“使用本地DBCP”，然后点击“DBCP设置”
+    6. “起始IP”设置为“192.168.155.2”， “结束IP”默认为“192.168.155.254”，确定保存
+    7. “子网IP”设置为“192.168.155.0”，“子网掩码”默认为“192.168.255.0”，确定保存
+
+
+配置网络连接：
+    1. 点击“虚拟机 - 设置”
+    2. 选择“网络适配器”
+    3. 右边选择“自定义”，选择自己配置的虚拟网卡
+    4. 勾选上面的“已连接”
+    5. 确定保存
+
+
+查看IP地址
+    命令：
+        1. ifconfig
+        2. ip addr
+
+
+测试网络是否联通
+    命令：ping
+    例如：ping 192.168.155.1
+
+
+使用Xshell远程连接Linux
+    1. 打开Xshell
+    2. 点击“新建连接”
+    3. 输入虚拟机IP地址，例如“192.168.155.2”
+    4. 输入账号密码
+    5. 打开连接
+
+
+Linux安装JDK
+    1. 使用Xftp软件，将JDK安装包发送过去。
+    2. 或者在Linux中直接下载，wget http://www.xxx.com/linux.tar.gz
+    3. 解压：
+        tar -zxvf jdk.tar.gz
+    4. 将 jdk1.8.0_161 重命名为 jdk8
+        mv jdk1.8.0_161 jdk8
+    5. 将解压后的jdk文件夹，移动到 /etc/jdk 下。
+        mv jdk8 /etc/
+
+
+配置环境变量
+    1. vi /etc/profile
+    2. 加入如下配置：
+        export JAVA_HOME=/etc/jdk8
+        export CLASSPATH=.:$JAVA_HOME/lib
+        export PATH=$PATH:$JAVA_HOME/bin
+    3. 按“Esc”结束编辑，输入“:wq”保存并退出
+    4. 刷新配置：
+        source /etc/profile
+
+
+安装Tomcat
+    1. 解压：   
+        tar -zxvf apache-tomcat-8.5.31.tar.gz
+    2. 重命名为 tomcat8
+        mv apache-tomcat-8.5.31 tomcat8
+    3. 移动至 /etc/tomcat8 下
+        mv tomcat8 /etc/
+    4. 启动Tomcat
+        4.1. 进入Tomcat的bin目录：
+            cd /etc/tomcat8/bin/
+        4.2. 运行Startup.sh脚本启动：
+            sh startup.sh
+
+
+配置防火墙允许
+    1. 简单粗暴，关闭防火墙：
+        1.1. 停止防火墙：
+            systemctl start firewalld.service
+            systemctl stop firewalld.service
+        1.2. 禁止防火墙自动启动：
+            systemctl enable firewalld.service
+            systemctl disable firewalld.service
+    2. 友好方式，配置防火墙允许8080端口的访问
+        firewall-cmd --permanent --add-port=端口号/tcp 
+
+
+配置hosts：
+    1. C:\Windows\System32\drivers\etc\
+    2. 编辑 hosts 文件
+    3. 添加：
+        192.168.155.128 www.155.com
+
