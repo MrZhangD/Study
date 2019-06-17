@@ -1,6 +1,0 @@
-1、tomcat的bin目录下的catalina.bat最后Host中添加以下虚拟目录
-<Context path="/" docBase="D:\apache-tomcat-8.5.38\apache-tomcat-8.5.38\webapps\Graduation\" debug="0" reloadable="true" crossContext="true" />
-
-2、server.xml将第一句改为第二句，即加上-Dfile.encoding=UTF-8
-set "JAVA_OPTS=%JAVA_OPTS% %JSSE_OPTS%"
-set "JAVA_OPTS=%JAVA_OPTS% %JSSE_OPTS% -Dfile.encoding=UTF-8"
